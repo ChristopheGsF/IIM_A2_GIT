@@ -16,7 +16,7 @@ if(isset($_POST['email']) && isset($_POST['password'])){
 
 		$email = htmlspecialchars($_POST["email"]);
 	  $password = htmlspecialchars($_POST["password"]);
-	  $request = $db->prepare("SELECT id, is_admin FROM members WHERE email
+	  $request = $db->prepare("SELECT id FROM users WHERE email
 	    LIKE :email AND password = :password");
 	    $request->execute(
 	    array(
@@ -27,15 +27,12 @@ if(isset($_POST['email']) && isset($_POST['password'])){
 	  $members = $request->fetchAll();
 		if(sizeof($members) > 0){
 	    $id_member = $members[0]["id"];
-	    $_SESSION["id_member"] = $id_member;
-
-		// TODO
-
-		// Force user connection to access dashboard
-		userConnection($db, 'git@initiation.com', 'password');
-
-		header('Location: dashboard.php');
-
+			$_SESSION["id_member"] = $id_member;
+			header('Location: dashboard.php');
+		}
+		else {
+			$error = 'Mauvais identifiants';
+		}
 	}else{
 		$error = 'Champs requis !';
 	}
