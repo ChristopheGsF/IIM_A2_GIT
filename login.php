@@ -14,6 +14,21 @@ require('model/functions.fn.php');
 if(isset($_POST['email']) && isset($_POST['password'])){
 	if(!empty($_POST['email']) && !empty($_POST['password'])){
 
+		$email = htmlspecialchars($_POST["email"]);
+	  $password = htmlspecialchars($_POST["password"]);
+	  $request = $db->prepare("SELECT id, is_admin FROM members WHERE email
+	    LIKE :email AND password = :password");
+	    $request->execute(
+	    array(
+	      "email" => $email,
+	      "password" => $password
+	    )
+	  );
+	  $members = $request->fetchAll();
+		if(sizeof($members) > 0){
+	    $id_member = $members[0]["id"];
+	    $_SESSION["id_member"] = $id_member;
+
 		// TODO
 
 		// Force user connection to access dashboard
