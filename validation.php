@@ -1,24 +1,26 @@
-<?php
+<?php session_start();
+
 require('config/config.php');
 require('model/functions.fn.php');
-session_start();
 
 if(	isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) &&
 	!empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password'])) {
 
-		$pseudo = htmlspecialchars($_POST["username"]);
-		$password = htmlspecialchars($_POST["password"]);
-		$email = htmlspecialchars($_POST["email"]);
-		$request = $db->prepare("INSERT INTO users (username, password, email, created_at)
-	  VALUES (:pseudo, :password, :email, NOW())");
-    $request->execute(
-    array(
-      "pseudo" => $pseudo,
-      "password" => $password,
-			"email" => $email
-    )
-    );
-		header('Location: login.php');
+if(isEmailAvailable($db, $_POST['email']) && isUsernameAvailable($db, $_POST['username']))
+{
+	userRegistration($db, $_POST['username'], $_POST['email'], $_POST['password']);
+	header('Location: login.php');
+}
+else 
+{
+
+	if(isEmailAvailable($db, $_POST['email'] == false)
+		$_SESSION['message'] = 'Email indisponible';
+	if (isUsernameAvailable($db, $_POST['username']) == false) {
+		$_SESSION['message'] = 'Username indisponible';
+	}
+}
+
 }else{
 	$_SESSION['message'] = 'Erreur : Formulaire incomplet';
 	header('Location: register.php');
