@@ -14,13 +14,11 @@ if(isEmailAvailable($db, $_POST['email']) && isUsernameAvailable($db, $_POST['us
 else 
 {
 
-	$_SESSION['message'] = 'ici';
-header('Location: register.php');
-	//if(isEmailAvailable($db, $_POST['email'] == false)
-	//	$error = 'Email indisponible';
-	//if (isUsernameAvailable($db, $_POST['username']) == false) {
-//		$error = 'Username indisponible';
-//	}
+	if(isEmailAvailable($db, $_POST['email'] == false)
+		$_SESSION['message'] = 'Email indisponible';
+	if (isUsernameAvailable($db, $_POST['username']) == false) {
+		$_SESSION['message'] = 'Username indisponible';
+	}
 }
 
 }else{
