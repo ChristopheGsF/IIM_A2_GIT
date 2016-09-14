@@ -1,5 +1,5 @@
-<body>
-	<?php include '_topbar.php'; ?>
+ 	<body>
+		<?php include '_topbar.php'; ?>
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -10,7 +10,7 @@
 							<div class="row">
 								<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
 									<div class="author">
-										<?php 
+										<?php
 											$sql = "SELECT picture FROM users WHERE id = :id LIMIT 1";
 											$req = $db->prepare($sql);
 											$req->execute(array(
@@ -52,5 +52,3 @@
 		</div>
 	</div>
 </body>
-
-

@@ -13,21 +13,8 @@ require('model/functions.fn.php');
 
 if(isset($_POST['email']) && isset($_POST['password'])){
 	if(!empty($_POST['email']) && !empty($_POST['password'])){
-
-		$email = htmlspecialchars($_POST["email"]);
-	  $password = htmlspecialchars($_POST["password"]);
-	  $request = $db->prepare("SELECT id FROM users WHERE email
-	    LIKE :email AND password = :password");
-	    $request->execute(
-	    array(
-	      "email" => $email,
-	      "password" => $password
-	    )
-	  );
-	  $members = $request->fetchAll();
-		if(sizeof($members) > 0){
-	    $id_member = $members[0]["id"];
-			$_SESSION["id_member"] = $id_member;
+		if (userConnection($db,$_POST['email'],$_POST['password']) == TRUE)
+		{
 			header('Location: dashboard.php');
 		}
 		else {
