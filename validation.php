@@ -11,14 +11,16 @@ if(isEmailAvailable($db, $_POST['email']) && isUsernameAvailable($db, $_POST['us
 	userRegistration($db, $_POST['username'], $_POST['email'], $_POST['password']);
 	header('Location: login.php');
 }
-else 
+else
 {
 
-	if(isEmailAvailable($db, $_POST['email'] == false)
+	if(isEmailAvailable($db, $_POST['email'] == false)){
 		$_SESSION['message'] = 'Email indisponible';
+	}
 	if (isUsernameAvailable($db, $_POST['username']) == false) {
 		$_SESSION['message'] = 'Username indisponible';
 	}
+	header('Location: register.php');
 }
 
 }else{
